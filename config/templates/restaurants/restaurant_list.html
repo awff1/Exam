@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Рестораны{% endblock %}
+
+{% block content %}
+
+<form method="get">
+    <input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q }}">
+    <button type="submit">Найти</button>
+</form>
+
+<br>
+
+<a href="{% url 'restaurant_create' %}">➕ Добавить ресторан</a>
+
+<ul>
+    {% for restaurant in object_list %}
+        <li>
+            <b>{{ restaurant.name }}</b><br>
+            {{ restaurant.address }}<br>
+
+            {% if restaurant.logo %}
+                <img src="{{ restaurant.logo.url }}" width="100">
+            {% endif %}
+
+            <br>
+            <a href="{% url 'restaurant_update' restaurant.pk %}">✏️ Редактировать</a>
+            |
+            <a href="{% url 'restaurant_delete' restaurant.pk %}">🗑 Удалить</a>
+        </li>
+        <hr>
+    {% empty %}
+        <li>Ресторанов нет</li>
+    {% endfor %}
+</ul>
+
+{% if is_paginated %}
+    <div>
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">←</a>
+        {% endif %}
+
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">→</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}
