@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>
+    {% if object %}
+        Редактирование блюда
+    {% else %}
+        Добавление блюда
+    {% endif %}
+</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="{% url 'dish_list' menu.id %}">← Назад к списку блюд</a>
+{% endblock %}
