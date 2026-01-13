@@ -8,24 +8,31 @@
 <a href="{% url 'dish_create' menu.id %}">➕ Добавить блюдо</a>
 <br><br>
 
+
 <ul>
-    {% for dish in object_list %}
-        <li>
-            <b>{{ dish.name }}</b> - {{ dish.price }} ₽<br>
-            {{ dish.description }}<br>
-            {% if dish.image %}
-                <img src="{{ dish.image.url }}" width="100">
-            {% endif %}
-            <br>
-            <a href="{% url 'dish_update' dish.pk %}">✏️ Редактировать</a> |
-            <a href="{% url 'dish_delete' dish.pk %}">🗑 Удалить</a> |
-            <a href="{% url 'review_create' dish.id %}">💬 Оставить отзыв</a>
-        </li>
-        <hr>
-    {% empty %}
-        <li>Блюд нет</li>
-    {% endfor %}
+{% for dish in object_list %}
+    <li>
+        <b>{{ dish.name }}</b> - {{ dish.price }} ₽<br>
+        {{ dish.description }}<br>
+        {% if dish.image %}
+            <img src="{{ dish.image.url }}" width="100">
+        {% endif %}
+        <br>
+        <a href="{% url 'dish_update' dish.pk %}">✏️ Редактировать</a> |
+        <a href="{% url 'dish_delete' dish.pk %}">🗑 Удалить</a> |
+        <a href="{% url 'review_create' dish.id %}">💬 Оставить отзыв</a>
+        <br>
+        <!-- Список отзывов с рейтингом -->
+        {% for review in dish.reviews.all %}
+            ⭐ {{ review.rating }} - {{ review.comment }}<br>
+        {% empty %}
+            Нет отзывов
+        {% endfor %}
+    </li>
+    <hr>
+{% endfor %}
 </ul>
+
 
 {% if is_paginated %}
 <div>

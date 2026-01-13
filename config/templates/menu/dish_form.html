@@ -1,13 +1,6 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h2>
-    {% if object %}
-        Редактирование блюда
-    {% else %}
-        Добавление блюда
-    {% endif %}
-</h2>
+<h2>{% if object %}Редактировать блюдо{% else %}Добавить блюдо{% endif %}</h2>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}

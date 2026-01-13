@@ -1,7 +1,6 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h2>Оставить отзыв для блюда "{{ form.initial.dish }}"</h2>
+<h2>Добавить отзыв для {{ dish.name }}</h2>
 
 <form method="post">
     {% csrf_token %}
@@ -9,5 +8,5 @@
     <button type="submit">Сохранить</button>
 </form>
 
-<a href="{% url 'dish_list' form.initial.menu %}">← Назад к блюдам</a>
+<a href="{% url 'dish_list' dish.menu.id %}">← Назад к списку блюд</a>
 {% endblock %}
